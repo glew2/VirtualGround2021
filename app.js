@@ -11,6 +11,8 @@ app.get('/script.js', function(req, res,next) {
     res.sendFile(__dirname + '/script.js');
 })
 
+const users = {}
+
 io.on('connection', socket => {
     socket.on('new-user', name => {
       users[socket.id] = name
