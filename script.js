@@ -2,6 +2,7 @@ const socket = io('http://localhost')
 const messageContainer = document.getElementById('message-container')
 const messageForm = document.getElementById('send-container')
 const messageInput = document.getElementById('message-input')
+const randButton = document.getElementById('randomPlayer')
 
 const name = prompt('What is your name?')
 appendMessage('You joined')
@@ -25,6 +26,13 @@ messageForm.addEventListener('submit', e => {
   appendMessage(`You: ${message}`)
   socket.emit('send-chat-message', message)
   messageInput.value = ''
+})
+
+randButton.addEventListener('click', e=>{
+  e.preventDefault();
+  // need to access the list of users from server
+  // also, need to find a way to get a random player
+  // this probably involves converting users from {} to [] (object->array)
 })
 
 function appendMessage(message) {
