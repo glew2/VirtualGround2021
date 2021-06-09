@@ -7,16 +7,25 @@ app.use(express.static(__dirname + '/node_modules'));
 app.get('/', function(req, res,next) {  
     res.sendFile(__dirname + '/welcome.html');
 });
+app.get('/index.html', function(req, res,next) {  
+  res.sendFile(__dirname + '/index.html');
+});
 app.get('/script.js', function(req, res,next) {
     res.sendFile(__dirname + '/script.js');
 })
 
-const users = {}
+var users = {}
+var userList = []
 
 io.on('connection', socket => {
-    socket.on('new-user', name => {
-      users[socket.id] = name
-      socket.broadcast.emit('user-connected', name)
+    socket.on('new-user', n => {
+      var user = {
+        name: n,
+        id: socket.id
+      }
+      users[socket.id] = n
+      userList.push(n)
+      socket.broadcast.emit('user-connected', n)
     })
     socket.on('send-chat-message', message => {
       socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] })

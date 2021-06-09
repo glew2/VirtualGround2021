@@ -4,16 +4,16 @@ const messageForm = document.getElementById('send-container')
 const messageInput = document.getElementById('message-input')
 const randButton = document.getElementById('randomPlayer')
 
-const name = prompt('What is your name?')
+const userName = prompt('What is your name?')
 appendMessage('You joined')
-socket.emit('new-user', name)
+socket.emit('new-user', userName)
 
 socket.on('chat-message', data => {
   appendMessage(`${data.name}: ${data.message}`)
 })
 
-socket.on('user-connected', name => {
-  appendMessage(`${name} connected`)
+socket.on('user-connected', user => {
+  appendMessage(`${user.name} connected`)
 })
 
 socket.on('user-disconnected', name => {
