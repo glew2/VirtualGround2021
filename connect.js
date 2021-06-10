@@ -1,5 +1,4 @@
-const express = require('express');  
-const { Server } = require('http');
+const express = require('express');
 const app = express();  
 const server = require('http').createServer(app);  
 const io = require('socket.io')(server);
@@ -32,7 +31,7 @@ io.on('request', request => {
                 "game" : games[gameId]
             }
             const con = clients[clientId].connection;
-            con.send(JSON.stringify(payLoad));
+            socket.broadcast.to(con).emit('message', JSON.stringify(payLoad));
         }
 
         if (result.method === "join") {
@@ -64,7 +63,7 @@ io.on('request', request => {
                 "game": game
             }
             game.clients.forEach(c => {
-                clients[c.clientId].connection.send(JSON.stringify(payLoad))
+                socket.broadcast.to(clients[c.clientId]).emit('message', JSON.stringify(payLoad));
             })
         }
     })
@@ -78,7 +77,6 @@ io.on('request', request => {
         "clientId": clientId
     }
     //send back the client connect
-    connection.send(JSON.stringify(payLoad))
-
+    socket.broadcast.to(connection).emit('message', JSON.stringify(payLoad));
 })    
 server.listen(80)

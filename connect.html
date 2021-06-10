@@ -13,14 +13,11 @@
     <div id  = 'divBoard'></div>
 
     <script>
-        const express = require('express');  
-        const app = express();  
-        const server = require('http').createServer(app);  
-        const io = require('socket.io')(server);
+        // client handlers, etc.
+        const ws = io('http://localhost')// seems to be an issue here--why?
         let clientId = null;
         let gameId = null;
         let playerRole = null;
-
         // let  ws = new io.Socket('http://localhost')
 
         const btnCreate = document.getElementById("btnCreate");
@@ -31,18 +28,14 @@
 
     
         btnJoin.addEventListener("click", e => {
-
             if (gameId === null)
                 gameId = txtGameId.value;
-            
             const payLoad = {
                 "method": "join",
                 "clientId": clientId,
                 "gameId": gameId
             }
-
-            ws.send(JSON.stringify(payLoad));
-
+            ws.emit('message', JSON.stringify(payLoad))
         })
 
         btnCreate.addEventListener("click", e => {
@@ -51,12 +44,10 @@
                 "method": "create",
                 "clientId": clientId
             }
-
-            ws.send(JSON.stringify(payLoad));
-
+            ws.emit('message', JSON.stringify(payLoad))
         })
 
-        ws.onmessage = message => {
+        ws.on('message', message => {
             //message.data
             const response = JSON.parse(message.data);
             //connect
@@ -133,7 +124,7 @@
 
 
             }
-        }
+        })
     </script>
 
 
