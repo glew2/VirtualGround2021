@@ -1,11 +1,14 @@
-const express = require('express');
-const app = express();  
-const server = require('http').createServer(app);  
-const io = require('socket.io')(server);
+var express = require('express');
+var app = express();  
+var server = require('http').createServer(app);  
+var io = require('socket.io')(server);
 
 app.use(express.static(__dirname + '/node_modules'));  
 app.get('/', function(req, res,next) {  
     res.sendFile(__dirname + '/connect.html');
+});
+app.get('/connectScript.js', function(req, res,next) {  
+    res.sendFile(__dirname + '/connectScript.js');
 });
 
 const clients = {};
@@ -17,7 +20,7 @@ io.on('request', request => {
     const connection = request.accept(null, request.origin);
     connection.on("open", () => console.log("opened!"))
     connection.on("close", () => console.log("closed!"))
-    connection.on("message", message => {
+    connection.on('message', message => {
         const result = JSON.parse(message.utf8Data)
         if (result.method === "create"){
             const clientId = result.clientId ;
