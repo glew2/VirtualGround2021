@@ -1,5 +1,5 @@
 // client handlers, etc.
-const server = io('http://localhost')// seems to be an issue here--why?
+const server = io('http://localhost')
 let clientId = null;
 let gameId = null;
 let playerRole = null;
@@ -19,21 +19,20 @@ btnJoin.addEventListener("click", e => {
         "clientId": clientId,
         "gameId": gameId
     }
-    server.emit('request', JSON.stringify(payLoad))
+    server.emit('message', payLoad)
 })
 
 btnCreate.addEventListener("click", e => {
-
     const payLoad = {
         "method": "create",
         "clientId": clientId
     }
-    server.emit('request', JSON.stringify(payLoad))
+    server.emit('message', payLoad)
 })
 
 server.on('message', message => {
     //message.data
-    const response = JSON.parse(message.data);
+    const response = message;
     //connect
     if (response.method === "connect"){
         clientId = response.clientId;
@@ -51,13 +50,6 @@ server.on('message', message => {
     if (response.method === "update"){
         //{1: "red", 1}
         if (!response.game.state) return;
-        for(const b of Object.keys(response.game.state))
-        {
-            const color = response.game.state[b];
-            const ballObject = document.getElementById("ball" + b);
-            ballObject.style.backgroundColor = color
-        }
-
     }
 
     //join
@@ -77,35 +69,5 @@ server.on('message', message => {
 
             //if (c.clientId === clientId) playerColor = c.color;
         })
-
-
-        while(divBoard.firstChild)
-        divBoard.removeChild (divBoard.firstChild)
-
-        for (let i = 0; i < game.balls; i++){
-
-            const b = document.createElement("button");
-            b.id = "ball" + (i +1);
-            b.tag = i+1
-            b.textContent = i+1
-            b.style.width = "150px"
-            b.style.height = "150px"
-            b.addEventListener("click", e => {
-                b.style.background = playerColor
-                const payLoad = {
-                    "method": "play",
-                    "clientId": clientId,
-                    "gameId": gameId,
-                    "ballId": b.tag,
-                    "color": playerColor
-                }
-                server.emit('request', JSON.stringify(payLoad))
-            })
-            divBoard.appendChild(b);
-        }
-
-
-
-
     }
 })

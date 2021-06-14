@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();  
 var server = require('http').createServer(app);  
 var io = require('socket.io')(server);
+var { v4: uuidv4 } = require('uuid');
 
 app.use(express.static(__dirname + '/node_modules'));  
 app.get('/', function(req, res,next) {  
@@ -15,16 +16,11 @@ const clients = {};
 const games = {};
 
 
-io.on('request', request => {
-
-    const connection = request.accept(null, request.origin);
-    connection.on("open", () => console.log("opened!"))
-    connection.on("close", () => console.log("closed!"))
-    connection.on('message', message => {
-        const result = JSON.parse(message.utf8Data)
-        if (result.method === "create"){
-            const clientId = result.clientId ;
-            const gameId = guid();
+io.on('connection', request => {
+    request.on('message', message => {
+        if (message.method === "create"){
+            const clientId = message.clientId;
+            const gameId = uuidv4();
             games[gameId] = {
                 "id": gameId,
                 "clients": [] 
@@ -33,14 +29,14 @@ io.on('request', request => {
                 "method": "create",
                 "game" : games[gameId]
             }
-            const con = clients[clientId].connection;
-            socket.broadcast.to(con).emit('message', JSON.stringify(payLoad));
+            const con = clients[clientId];
+            request.emit('message', payLoad);
         }
 
-        if (result.method === "join") {
+        if (message.method === "join") {
 
-            const clientId = result.clientId;
-            const gameId = result.gameId;
+            const clientId = request.clientId;
+            const gameId = message.gameId;
             const game = games[gameId];
             if (game.clients.length > 12) 
             {
@@ -66,20 +62,20 @@ io.on('request', request => {
                 "game": game
             }
             game.clients.forEach(c => {
-                socket.broadcast.to(clients[c.clientId]).emit('message', JSON.stringify(payLoad));
+                request.broadcast.to(clients[c.clientId]).emit('message', payLoad);
             })
         }
     })
-    const clientId = guid();
-    clients[clientId] = {
-        "connection":  connection
-    }
+    // const clientId = uuidv4();
+    // clients[clientId] = {
+    //     "connection":  connection
+    // }
 
-    const payLoad = {
-        "method": "connect",
-        "clientId": clientId
-    }
-    //send back the client connect
-    socket.broadcast.to(connection).emit('message', JSON.stringify(payLoad));
+    // const payLoad = {
+    //     "method": "connect",
+    //     "clientId": clientId
+    // }
+    // //send back the client connect
+    // request.broadcast.to(connection).emit('message', JSON.stringify(payLoad));
 })    
 server.listen(80)
