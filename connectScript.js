@@ -1,5 +1,5 @@
 // client handlers, etc.
-const server = io('http://localhost')
+const server = io('http://localhost/')
 let clientId = null;
 let gameId = null;
 let playerRole = null;
@@ -33,16 +33,18 @@ btnCreate.addEventListener("click", e => {
 server.on('message', message => {
     //message.data
     const response = message;
-    //connect
-    if (response.method === "connect"){
-        clientId = response.clientId;
-        console.log("Client id Set successfully " + clientId)
-    }
+    // //connect
+    // if (response.method === "connect"){
+    //     clientId = response.clientId;
+    //     console.log("Client id Set successfully " + clientId)
+    // }
 
     //create
     if (response.method === "create"){
         gameId = response.game.id;
-        console.log("game successfully created with id " + response.game.id)  
+        console.log("game successfully created with id " + gameId)
+        window.location.href = "welcome.html";
+        server.emit('createData', { data: gameId});
     }
 
 

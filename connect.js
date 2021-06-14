@@ -11,12 +11,22 @@ app.get('/', function(req, res,next) {
 app.get('/connectScript.js', function(req, res,next) {  
     res.sendFile(__dirname + '/connectScript.js');
 });
+app.get('/welcome.html', function(req, res,next) {  
+    res.sendFile(__dirname + '/welcome.html');
+});
+app.get('/index.html', function(req, res,next) {  
+    res.sendFile(__dirname + '/index.html');
+});
 
 const clients = {};
 const games = {};
 
 
 io.on('connection', request => {
+    request.on('createData', data=>{
+        // this is a good time to add the HOST to the clientList
+        request.emit('host-connection', data);
+    })
     request.on('message', message => {
         if (message.method === "create"){
             const clientId = message.clientId;
@@ -71,7 +81,6 @@ io.on('connection', request => {
     // clients[clientId] = {
     //     "connection":  connection
     // }
-
     // const payLoad = {
     //     "method": "connect",
     //     "clientId": clientId
