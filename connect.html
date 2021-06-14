@@ -4,17 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .button1 {
+            display: block;
+            height: 50px;
+            width: 200px;
+            padding: 0;
+            background: #FFFF;
+            text-align: center;
+            border: none;
+            outline: none;
+            border-radius: 0px;
+            overflow: hidden;
+            font-family: 'Impact', fantasy;
+            font-size: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-left: 527.2px;
+            margin-top: 400px;
+            z-index: 1;
+            position: relative;
+            
+        }
+
+        .button1:hover {
+            background: #F5F5F5;
+        }
+
+        .button1:active {
+            background: #DCDCDC;
+        }
+
+        .button2 {
+            display: block;
+            height: 50px;
+            width: 200px;
+            padding: 0;
+            background: #FFFF;
+            text-align: center;
+            border: none;
+            outline: none;
+            border-radius: 0px;
+            overflow: hidden;
+            font-family: 'Impact', fantasy;
+            font-size: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-left: 727.2px;
+            margin-top: -50px;
+            z-index: 1;
+            position: relative;
+            
+        }
+
+        .button2:hover {
+            background: #F5F5F5;
+        }
+
+        .button2:active {
+            background: #DCDCDC;
+        }
+
+        .bg-container{
+            width: 500px;
+            height: 400px;
+            opacity: 0.5;
+            background-color: #000000;
+            background-repeat: no-repeat;
+            background-size: 200px;
+            background-position: center center;
+            margin-left: 473.2px;
+            margin-top: -350px;
+            z-index: 0;
+            position: relative;
+        } 
+        
+        .gameCode {
+            width: 394px;
+            height: 50px;
+            background-color: #FFF;
+            text-align: center;
+            font-family: 'Impact', fantasy;
+            font-size: 30px;
+            font-weight: 500;
+            margin-left: 526px;
+            margin-top: -190px;
+            position: fixed;
+            z-index: 0;
+
+            
+        }
+
+        .welcomeText {
+            width: 394px;
+            height: 50px;
+            text-align: center;
+            font-family: 'Impact', fantasy;
+            font-size: 50px;
+            font-weight: 500;
+            color: white;
+            margin-left: 526px;
+            margin-top: -375px;
+            position: fixed;
+            z-index: 0;
+
+            
+        }
+       
+        
+        
+        
+        
+        
+    </style>
     <title>VirtualGround</title>
     <script defer src="http://localhost/socket.io/socket.io.js"></script>
     <script defer src="connectScript.js"></script>
 </head>
-<body>
-    <h1>Connect to VirtualGround!</h1>
-    <button id = 'btnCreate'>New Game</button>
-    <button id = 'btnJoin'>Join Game</button>
-    <input type = 'text' id = 'txtGameId'>
+<body style="background-color:#E8034F ;">
+    
+    
+    <!--<button id = 'btnCreate'>New Game</button>*/
+    /*<button id = 'btnJoin'>Join Game</button>--> 
+    <button type="button" class="button1" id="btnCreate">New Game</button>
+     
+    <button type="button" class="button2" id="btnJoin">Join Game</button>
+
+    
     <div id  = 'divPlayers'></div>
     <div id  = 'divBoard'></div>
+    <div class="bg-container"></div>
+    <input type="input" class="gameCode" placeholder="Game Code" id="txtGameId"></input>
+    <div class="welcomeText">Connect to VirtualGround</div>
+
+
 
     
 </body>

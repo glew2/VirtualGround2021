@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();  
 var server = require('http').createServer(app);  
 var io = require('socket.io')(server);
-var { v4: uuidv4 } = require('uuid');
+var { default: ShortUniqueId } = require('short-unique-id');
 
 app.use(express.static(__dirname + '/node_modules'));  
 app.get('/', function(req, res,next) {  
@@ -20,7 +20,8 @@ io.on('connection', request => {
     request.on('message', message => {
         if (message.method === "create"){
             const clientId = message.clientId;
-            const gameId = uuidv4();
+            const uid = new ShortUniqueId();
+            const gameId = uid.randomUUID(4).toUpperCase();
             games[gameId] = {
                 "id": gameId,
                 "clients": [] 
