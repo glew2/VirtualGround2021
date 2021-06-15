@@ -28,8 +28,10 @@ const uid = new ShortUniqueId();
 
 io.on('connection', request => {
     request.on('get-client-list', gameId => {
-        let g = games[gameId];
-        request.emit('client-list', {"list": g.clients});
+        var g = games[gameId].clients;
+        request.emit('client-list', {"list": g});
+        var newName = //client who request name
+        request.broadcast.emit('new-client', newName);
     })
     request.on('message', message => {
         if (message.method === "create"){
