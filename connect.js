@@ -30,9 +30,12 @@ io.on('connection', request => {
     request.on('get-client-list', gameId => {
         var g = games[gameId].clients;
         request.emit('client-list', {"list": g});
-        var newName = //client who request name
-        request.broadcast.emit('new-client', newName);
-    })
+        // var newName = //client who request name
+        request.broadcast.emit('client-list', {"list": g});
+    });
+    request.on('start-game', function() {
+        request.broadcast.emit('begin');
+    });
     request.on('message', message => {
         if (message.method === "create"){
             const clientId = message.clientId;

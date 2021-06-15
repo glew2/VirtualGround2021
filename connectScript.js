@@ -51,7 +51,7 @@ server.on('message', message => {
     if (response.method === "create"){
         gameId = response.game.id;
         console.log("game successfully created with id " + gameId);
-        window.location.href = "welcome.html" + "?gameId=" + gameId;
+        window.location.href = "welcome.html" + "?gameData=" + gameId + ";" + clientId;
     }
 
 
@@ -64,21 +64,15 @@ server.on('message', message => {
     //join
     if (response.method === "join"){
         const game = response.game;
-
-        while(divPlayers.firstChild)
-            divPlayers.removeChild (divPlayers.firstChild)
-
         game.clients.forEach (c => {
-
             const d = document.createElement("div");
             // d.style.width = "200px";
             // d.style.background = c.color
             d.textContent = c.clientId;
             divPlayers.appendChild(d);
-
             //if (c.clientId === clientId) playerColor = c.color;
         })
         gameId = response.game.id;
-        window.location.href = "welcome.html" + "?gameId=" + gameId;
+        window.location.href = "welcome.html" + "?gameData=" + gameId + ";" + clientId;
     }
 })
