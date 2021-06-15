@@ -15,7 +15,7 @@ const divBoard = document.getElementById("divBoard");
 
 btnJoin.addEventListener("click", e => {
     if (gameId === null)
-        gameId = txtGameId.value;
+        gameId = txtGameId.value.toUpperCase();
     if (playerName === null)
         playerName = txtName.value; 
     const payLoad = {

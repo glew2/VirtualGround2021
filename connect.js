@@ -65,19 +65,11 @@ io.on('connection', request => {
             if (game.clients.length > 12) {
                 return;
             }
-            // // how to choose if client is hider or seeker
-            // const role = null;
-            // for (int x = 0; x < game.clients.length; x++){
-            //     if ((Math.random()*10) % 2 === 0  ){
-            //         role  = "Hider";
-            //     }
-            //     else    
-            //         role = "seeker";
-            // }
+
             game.clients.push({
                 "clientId": clientId,
                 "name": name,
-                //"role": role
+                // "role": role
             })
             const payLoad = {
                 "method": "join",
@@ -93,5 +85,15 @@ io.on('connection', request => {
     }
     //send back the client connect
     io.emit('message', payLoad);
-})  
+});
+// function getRandomRole(){
+//     // 1 seeker per 3 hiders (later)
+//     let x = Math.floor(Math.random() * 2);
+//     if (x===0) {
+//         return "Hider";
+//     }
+//     else {
+//         return "Seeker";
+//     }
+// }  
 server.listen(80)

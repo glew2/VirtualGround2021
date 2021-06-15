@@ -19,9 +19,7 @@ server.on('client-list', listContainer => {
             button.onclick=(e=>{
                 server.emit('start-game', gameId);
                 window.location.href = "index.html";
-                // in server, broadcast back (everyone except host, automatically happens)
-                // a message like 'begin'
-                // listen for this, handle it by doing href
+                // send to different page based on role
             });
             document.getElementById("buttonHolder").appendChild(button);
             BUTTON_CREATED = true;
@@ -34,5 +32,6 @@ server.on('client-list', listContainer => {
     });
 });
 server.on('begin', () => {
+    // TODO send to different page based on role
     window.location.href = "index.html";
 });
