@@ -8,12 +8,7 @@
     <input type="button" onclick="window.location.href = '/index.html';" value="Start"/>
     <h3 id="idDisplay">Game Code (share this with your friends):</h3>
     <div id  = 'divPlayers'></div>
-    <script>
-        // IO is not defined again!
-        const server = io.connect('localhost:80')
-        server.on('host-connection', data=>{
-            document.getElementById("idDisplay").innerHTML = "Game Code:" + data.gameId;
-        });
-    </script>
+    <script defer src="http://localhost/socket.io/socket.io.js"></script>
+    <script defer src="welcomeScript.js"></script>
 </body>
 </html>

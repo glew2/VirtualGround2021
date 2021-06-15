@@ -33,18 +33,17 @@ btnCreate.addEventListener("click", e => {
 server.on('message', message => {
     //message.data
     const response = message;
-    // //connect
-    // if (response.method === "connect"){
-    //     clientId = response.clientId;
-    //     console.log("Client id Set successfully " + clientId)
-    // }
+    //connect
+    if (response.method === "connect"){
+        clientId = response.clientId;
+        console.log("Client id Set successfully " + clientId);
+    }
 
     //create
     if (response.method === "create"){
         gameId = response.game.id;
-        console.log("game successfully created with id " + gameId)
-        window.location.href = "welcome.html";
-        server.emit('createData', { data: gameId});
+        console.log("game successfully created with id " + gameId);
+        window.location.href = "welcome.html" + "?gameId=" + gameId;
     }
 
 
@@ -71,5 +70,7 @@ server.on('message', message => {
 
             //if (c.clientId === clientId) playerColor = c.color;
         })
+        gameId = response.game.id;
+        window.location.href = "welcome.html" + "?gameId=" + gameId;
     }
 })

@@ -11,6 +11,9 @@ app.get('/', function(req, res,next) {
 app.get('/connectScript.js', function(req, res,next) {  
     res.sendFile(__dirname + '/connectScript.js');
 });
+app.get('/welcomeScript.js', function(req, res,next) {  
+    res.sendFile(__dirname + '/welcomeScript.js');
+});
 app.get('/welcome.html', function(req, res,next) {  
     res.sendFile(__dirname + '/welcome.html');
 });
@@ -20,17 +23,13 @@ app.get('/index.html', function(req, res,next) {
 
 const clients = {};
 const games = {};
+const uid = new ShortUniqueId();
 
 
 io.on('connection', request => {
-    request.on('createData', data=>{
-        // this is a good time to add the HOST to the clientList
-        request.emit('host-connection', data);
-    })
     request.on('message', message => {
         if (message.method === "create"){
             const clientId = message.clientId;
-            const uid = new ShortUniqueId();
             const gameId = uid.randomUUID(4).toUpperCase();
             games[gameId] = {
                 "id": gameId,
@@ -40,20 +39,17 @@ io.on('connection', request => {
                 "method": "create",
                 "game" : games[gameId]
             }
-            const con = clients[clientId];
             request.emit('message', payLoad);
         }
 
         if (message.method === "join") {
-
-            const clientId = request.clientId;
+            const clientId = message.clientId;
             const gameId = message.gameId;
             const game = games[gameId];
-            if (game.clients.length > 12) 
-            {
+            if (game.clients.length > 12) {
                 return;
             }
-            // how to choose if client is hider or seeker
+            // // how to choose if client is hider or seeker
             // const role = null;
             // for (int x = 0; x < game.clients.length; x++){
             //     if ((Math.random()*10) % 2 === 0  ){
@@ -66,26 +62,19 @@ io.on('connection', request => {
                 "clientId": clientId,
                 //"role": role
             })
-            //if (game.clients.length === 3) updateGameState();
-
             const payLoad = {
                 "method": "join",
                 "game": game
             }
-            game.clients.forEach(c => {
-                request.broadcast.to(clients[c.clientId]).emit('message', payLoad);
-            })
+            io.emit('message', payLoad);
         }
     })
-    // const clientId = uuidv4();
-    // clients[clientId] = {
-    //     "connection":  connection
-    // }
-    // const payLoad = {
-    //     "method": "connect",
-    //     "clientId": clientId
-    // }
-    // //send back the client connect
-    // request.broadcast.to(connection).emit('message', JSON.stringify(payLoad));
+    const clientId = uid.randomUUID(8);
+    const payLoad = {
+        "method": "connect",
+        "clientId": clientId
+    }
+    //send back the client connect
+    io.emit('message', payLoad);
 })    
 server.listen(80)
