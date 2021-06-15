@@ -22,14 +22,19 @@ app.get('/index.html', function(req, res,next) {
 });
 
 const clients = {};
-const games = {};
+const games = {}; //master list of games, clients, and their IDs/names
 const uid = new ShortUniqueId();
 
 
 io.on('connection', request => {
+    request.on('get-client-list', gameId => {
+        let g = games[gameId];
+        request.emit('client-list', {"list": g.clients});
+    })
     request.on('message', message => {
         if (message.method === "create"){
             const clientId = message.clientId;
+            const clientName= message.name;
             const gameId = uid.randomUUID(4).toUpperCase();
             games[gameId] = {
                 "id": gameId,
@@ -39,11 +44,17 @@ io.on('connection', request => {
                 "method": "create",
                 "game" : games[gameId]
             }
+            payLoad.game.clients.push({
+                "clientId": clientId,
+                "name": clientName,
+                //"role": role
+            })
             request.emit('message', payLoad);
         }
 
         if (message.method === "join") {
             const clientId = message.clientId;
+            const name = message.name;
             const gameId = message.gameId;
             const game = games[gameId];
             if (game.clients.length > 12) {
@@ -60,6 +71,7 @@ io.on('connection', request => {
             // }
             game.clients.push({
                 "clientId": clientId,
+                "name": name,
                 //"role": role
             })
             const payLoad = {
@@ -76,5 +88,5 @@ io.on('connection', request => {
     }
     //send back the client connect
     io.emit('message', payLoad);
-})    
+})  
 server.listen(80)
