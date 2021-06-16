@@ -1,13 +1,111 @@
 <!DOCTYPE html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>VirtualGround</title>
-        <script defer src="http://localhost/socket.io/socket.io.js"></script>
-        <script defer src="hider.js"></script>
-    </head>
-    <body>
-        <h1 id="seekerText">(main hider page)</h1>
-    </body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VirtualGrounds</title>
+    <script defer src="http://localhost/socket.io/socket.io.js"></script>
+    <script defer src="hider.js"></script>
+    
+  </head>
+  <body>
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        max-width: 960px;
+        max-height: 760px;
+        margin: auto;
+        background-color:#009952;
+      }
+      #message-input {
+        width: 800px;
+        height: 50px;
+        padding: 0;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Garamond', serif;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 0px -400px auto;
+      }
+      #send-container {
+        width: 800px;
+        height: 75px;
+        padding: 0;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Impact', fantasy;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 665px 50px auto;
+      }
+      .sendbtn {
+        display: block;
+        height: 75px;
+        width: 75px;
+        padding: 0;
+        background: #FFFF;
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Impact', fantasy;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 0px 800px auto;
+      }
+      .sendbtn:hover {
+        background: #F5F5F5;
+      }
+      .sendbtn:active {
+        background: #DCDCDC;
+      }
+      .sendctn {
+        width: 80px;
+        height: 75px;
+        padding: 0;
+        margin: 300px 300px auto;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Garamond', serif;
+        font-size: 40px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+      }
+    </style>
+    <div id="message-container" style="font-family: 'Impact', fantasy; font-size: 20px; background-color: #FFF;"></div>
+      
+    
+    <form type="form" class="sendctn" id="send-container">
+      <input type="text" class="msgin" id="message-input"></input> 
+      <button type="submit" class="sendbtn" id="send-button">Send</button>
+    </form>
+      
+  </body>
 </html>

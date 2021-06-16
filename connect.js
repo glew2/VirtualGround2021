@@ -38,6 +38,9 @@ app.get('/seeker.js', function(req, res,next) {
 app.get('/seeker.html', function(req, res,next) {  
     res.sendFile(__dirname + '/seeker.html');
 });
+app.get('/hider.html', function(req, res,next) {  
+    res.sendFile(__dirname + '/hider.html');
+});
 
 const clients = {};
 const games = {}; //master list of games, clients, and their IDs/names
@@ -46,6 +49,20 @@ const uid = new ShortUniqueId();
 
 
 io.on('connection', request => {
+    request.on('send-chat-message', data => {
+        var g = games[data.gameId];
+        var clientId = data.clientId;
+        var name = "";
+        var role = "";
+        for (i=0; i<g.clients.length; i++) {
+            if (g.clients[i].clientId===clientId) {
+                name = g.clients[i].name;
+                role = g.clients[i].role;
+                break;
+            }
+        }
+        request.broadcast.emit('chat-message', {"message": data.message, "name": name, "role": role});
+    });
     request.on('get-client-list', gameId => {
         var g = games[gameId].clients;
         request.emit('client-list', {"list": g});

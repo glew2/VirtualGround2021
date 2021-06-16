@@ -36,9 +36,9 @@ server.on('begin', () => {
 });
 server.on('return-role', role=>{
     if (role==="Hider") {
-        window.location.href = "hiderTimer.html" + "?gameData=" + gameId + ";" + clientId;
+        window.location.href = "hiderTimer.html" + "?gameData=" + gameId + ";" + clientId + ";" + role;
     }
     else if (role==="Seeker") {
-        window.location.href = "seekerTimer.html" + "?gameData=" + gameId + ";" + clientId;
+        window.location.href = "seekerTimer.html" + "?gameData=" + gameId + ";" + clientId + ";" + role;
     }
 });
