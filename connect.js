@@ -17,12 +17,28 @@ app.get('/welcomeScript.js', function(req, res,next) {
 app.get('/welcome.html', function(req, res,next) {  
     res.sendFile(__dirname + '/welcome.html');
 });
-app.get('/index.html', function(req, res,next) {  
-    res.sendFile(__dirname + '/index.html');
+app.get('/hTimeScript.js', function(req, res,next) {  
+    res.sendFile(__dirname + '/hTimeScript.js');
+});
+app.get('/sTimeScript.js', function(req, res,next) {  
+    res.sendFile(__dirname + '/sTimeScript.js');
+});
+app.get('/hiderTimer.html', function(req, res,next) {  
+    res.sendFile(__dirname + '/hiderTimer.html');
+});
+app.get('/seekerTimer.html', function(req, res,next) {  
+    res.sendFile(__dirname + '/seekerTimer.html');
+});
+app.get('/hider.html', function(req, res,next) {  
+    res.sendFile(__dirname + '/hider.html');
+});
+app.get('/seeker.html', function(req, res,next) {  
+    res.sendFile(__dirname + '/seeker.html');
 });
 
 const clients = {};
 const games = {}; //master list of games, clients, and their IDs/names
+var role = null;
 const uid = new ShortUniqueId();
 
 
@@ -30,11 +46,26 @@ io.on('connection', request => {
     request.on('get-client-list', gameId => {
         var g = games[gameId].clients;
         request.emit('client-list', {"list": g});
-        // var newName = //client who request name
         request.broadcast.emit('client-list', {"list": g});
     });
-    request.on('start-game', function() {
-        request.broadcast.emit('begin');
+    request.on('start-game', gameId=> {
+        var theGame = games[gameId];
+        theGame.clients.forEach(c =>{
+            c.role = getRandomRole();
+        });
+        io.emit('begin');
+    });
+    request.on('find-role', data=>{
+        var role = "";
+        var g = games[data.gameId];
+        var clientId = data.clientId;
+        for (i=0; i<g.clients.length; i++) {
+            if (g.clients[i].clientId===clientId) {
+                role = g.clients[i].role;
+                break;
+            }
+        }
+        request.emit('return-role', role);
     });
     request.on('message', message => {
         if (message.method === "create"){
@@ -52,7 +83,7 @@ io.on('connection', request => {
             payLoad.game.clients.push({
                 "clientId": clientId,
                 "name": clientName,
-                //"role": role
+                "role": role
             })
             request.emit('message', payLoad);
         }
@@ -69,7 +100,7 @@ io.on('connection', request => {
             game.clients.push({
                 "clientId": clientId,
                 "name": name,
-                // "role": role
+                "role": role
             })
             const payLoad = {
                 "method": "join",
@@ -86,14 +117,14 @@ io.on('connection', request => {
     //send back the client connect
     io.emit('message', payLoad);
 });
-// function getRandomRole(){
-//     // 1 seeker per 3 hiders (later)
-//     let x = Math.floor(Math.random() * 2);
-//     if (x===0) {
-//         return "Hider";
-//     }
-//     else {
-//         return "Seeker";
-//     }
-// }  
+function getRandomRole(){
+    // 1 seeker per 2 hiders
+    let x = Math.floor(Math.random() * 3);
+    if (x<=1) {
+        return "Hider";
+    }
+    else {
+        return "Seeker";
+    }
+}  
 server.listen(80)

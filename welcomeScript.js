@@ -18,7 +18,6 @@ server.on('client-list', listContainer => {
             button.appendChild(document.createTextNode("START GAME"));
             button.onclick=(e=>{
                 server.emit('start-game', gameId);
-                window.location.href = "index.html";
                 // send to different page based on role
             });
             document.getElementById("buttonHolder").appendChild(button);
@@ -32,6 +31,14 @@ server.on('client-list', listContainer => {
     });
 });
 server.on('begin', () => {
-    // TODO send to different page based on role
-    window.location.href = "index.html";
+    // send to different page based on role
+    server.emit('find-role', {"gameId": gameId, "clientId": clientId});
+});
+server.on('return-role', role=>{
+    if (role==="Hider") {
+        window.location.href = "hiderTimer.html" + "?gameData=" + gameId + ";" + clientId;
+    }
+    else if (role==="Seeker") {
+        window.location.href = "seekerTimer.html" + "?gameData=" + gameId + ";" + clientId;
+    }
 });

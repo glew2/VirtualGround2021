@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        
+        <title>VirtualGround</title>
+        <script defer src="http://localhost/socket.io/socket.io.js"></script>
+        <script defer src="sTimeScript.js"></script>
+    </head>
+    <body>
+        <h1 id="seekerText">You are a seeker!</h1>
+        <h2 id="timer">30 seconds until seeking time!</h2>
+        <style>
+            html, body {
+                width: 100%;
+                height: 100%;
+                max-width: 960px;
+                max-height: 760px;
+                background-color: #99002e;
+                margin: auto;
+            }
+            #seekerText {
+                width: 400px;
+                height: 50px;
+                text-align: center;
+                font-family: 'Impact', fantasy;
+                font-size: 50px;
+                font-weight: 500;
+                color: white;
+                margin: 160px 270px auto;
+                position: fixed;
+                z-index: 0;
+            }
+            #timer {
+                width: 400px;
+                height: 50px;
+                text-align: center;
+                font-family: 'Impact', fantasy;
+                font-size: 50px;
+                font-weight: 500;
+                color: white;
+                margin: 220px 270px auto;
+                position: fixed;
+                z-index: 0;
+            }
+        </style>
+    </body>
+</html>
