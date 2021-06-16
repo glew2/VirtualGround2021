@@ -29,8 +29,11 @@ app.get('/hiderTimer.html', function(req, res,next) {
 app.get('/seekerTimer.html', function(req, res,next) {  
     res.sendFile(__dirname + '/seekerTimer.html');
 });
-app.get('/hider.html', function(req, res,next) {  
-    res.sendFile(__dirname + '/hider.html');
+app.get('/hider.js', function(req, res,next) {  
+    res.sendFile(__dirname + '/hider.js');
+});
+app.get('/seeker.js', function(req, res,next) {  
+    res.sendFile(__dirname + '/seeker.js');
 });
 app.get('/seeker.html', function(req, res,next) {  
     res.sendFile(__dirname + '/seeker.html');
