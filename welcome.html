@@ -4,7 +4,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <body>
-    <h2>Welcome to VirtualGround!</h2>
+
+    <style> 
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            max-width: 960px;
+            max-height: 760px;
+            margin: auto;
+            background-color:rgb(183, 74, 255);
+        }
+        
+        #idDisplay {
+            display: block;
+            height: 75px;
+            width: 600px;
+            padding: 0;
+            background: #FFFF;
+            text-align: center;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            overflow: hidden;
+            font-family: 'Impact', fantasy;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            z-index: 1;
+            position: fixed;
+            margin: 100px 450px auto;
+        }
+
+        #title {
+            height: 100%;
+            width: 370px 100%;
+            text-align: center;
+            border: none;
+            outline: none;
+            overflow: hidden;
+            font-family: 'Impact', fantasy;
+            font-size: 60px;
+            font-weight: 500;
+            cursor: pointer;
+            z-index: 1;
+            position: fixed;
+            margin: auto 370px auto;
+        }
+
+    </style>
+
+    <h2 id="title">Welcome to VirtualGround!</h2>
     <h3 id="idDisplay">Game Code (share this with your friends):</h3>
     <div id="buttonHolder"></div>
     <div id ='divPlayers'></div>

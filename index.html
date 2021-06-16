@@ -1,61 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>VirtualGrounds</title>
-  <script defer src="http://localhost/socket.io/socket.io.js"></script>
-  <script defer src="script.js"></script>
-  <style>
-    body {
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-    }
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VirtualGrounds</title>
+    <script defer src="http://localhost/socket.io/socket.io.js"></script>
+    <script defer src="script.js"></script>
+    <style>
+      
+    
+    </style>
+    
+      
+  </head>
+  <body>
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        max-width: 960px;
+        max-height: 760px;
+        margin: auto;
+        background-color:rgb(255, 145, 0);
+      }
 
-    #message-container {
-      width: 80%;
-      max-width: 1200px;
-    }
+      
 
-    #message-container div {
-      background-color: #CCC;
-      padding: 5px;
-    }
+      #message-input {
+        width: 800px;
+        height: 50px;
+        padding: 0;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Garamond', serif;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 0px -400px auto;
+      }
 
-    #message-container div:nth-child(2n) {
-      background-color: #FFF;
-    }
+      #send-container {
+        width: 800px;
+        height: 75px;
+        padding: 0;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Impact', fantasy;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 665px 50px auto;
+        
+      }
+      
+      
 
-    #send-container {
-      position: fixed;
-      padding-bottom: 30px;
-      bottom: 0;
-      background-color: white;
-      max-width: 1200px;
-      width: 80%;
-      display: flex;
-    }
+      .random {
+        display: block;
+        height: 75px;
+        width: 75px;
+        padding: 0;
+        background: #FFFF;
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Impact', fantasy;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 665px 940px auto;
+        
+      }
 
-    #message-input {
-      flex-grow: 1;
-    }
-  </style>
-     
-</head>
-<body>
-  <div id="message-container"></div>
-  
-  #randomButton {
-    /*Alessandro - style this and make it next to the send button for now*/
-  }
-</style>
-  <form id="send-container">
-    <input type="text" id="message-input">
-    <button type="submit" id="send-button">Send</button>
-  </form>
-  <button id="randomPlayer">Random Player</button>
-</body>
+      .random:hover {
+        background: #F5F5F5;
+      }
+
+      .random:active {
+        background: #DCDCDC;
+      }
+
+      .sendbtn {
+        display: block;
+        height: 75px;
+        width: 75px;
+        padding: 0;
+        background: #FFFF;
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Impact', fantasy;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 0px 800px auto;
+    
+        
+      }
+
+      .sendbtn:hover {
+        background: #F5F5F5;
+      }
+
+      .sendbtn:active {
+        background: #DCDCDC;
+      }
+
+
+      
+
+      .sendctn {
+        width: 80px;
+        height: 75px;
+        padding: 0;
+        margin: 300px 300px auto;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Garamond', serif;
+        font-size: 40px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        
+      }
+
+      #jailmessage-input {
+        width: 200px;
+        height: 25px;
+        padding: 0;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Garamond', serif;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 0px -100px auto;
+        
+      }
+
+      #send-jailcontainer {
+        width: 200px;
+        height: 25px;
+        padding: 0;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Impact', fantasy;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 100px 950px auto;
+        
+      }
+      
+      
+
+      .sendbtnjail {
+        display: block;
+        height: 25px;
+        width: 75px;
+        padding: 0;
+        background: #FFFF;
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Impact', fantasy;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 0px 200px auto;
+    
+        
+      }
+
+      .sendbtnjail:hover {
+        background: #F5F5F5;
+      }
+
+      .sendbtnjail:active {
+        background: #DCDCDC;
+      }
+
+
+      
+
+      .sendjail {
+        width: 80px;
+        height: 75px;
+        padding: 0;
+        margin: 100px 100px auto;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Garamond', serif;
+        font-size: 40px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        
+      }
+
+      #escapemessage-input {
+        width: 200px;
+        height: 25px;
+        padding: 0;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Garamond', serif;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 0px -100px auto;
+        
+      }
+
+      #send-escapecontainer {
+        width: 200px;
+        height: 25px;
+        padding: 0;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Impact', fantasy;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 400px 950px auto;
+        
+      }
+      
+      
+
+      .sendbtnescape {
+        display: block;
+        height: 25px;
+        width: 75px;
+        padding: 0;
+        background: #FFFF;
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Impact', fantasy;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        margin: 0px 200px auto;
+    
+        
+      }
+
+      .sendbtnescape:hover {
+        background: #F5F5F5;
+      }
+
+      .sendbtnescape:active {
+        background: #DCDCDC;
+      }
+
+
+      
+
+      .sendescape{
+        width: 80px;
+        height: 75px;
+        padding: 0;
+        margin: 400px 100px auto;
+        background: rgb(228, 228, 228);
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'Garamond', serif;
+        font-size: 40px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        
+      }
+      
+    
+    </style>
+    <div id="message-container"></div>
+      
+    <button type="button" class="random">Random Player</button>
+      
+    
+    <form type="form" class="sendctn" id="send-container">
+      <input type="text" class="msgin" id="message-input"></input> 
+      <button type="submit" class="sendbtn" id="send-button">Send</button>
+    </form>
+
+    <form type="form" class="sendjail" id="send-jailcontainer">
+      <input type="text" class="sendjail" id="jailmessage-input" placeholder="Submit To Jail"></input> 
+      <button type="submit" class="sendbtnjail" id="jailsend-button">Send</button>
+    </form>
+
+    <form type="form" class="sendescape" id="send-escapecontainer">
+      <input type="text" class="sendescape" id="escapemessage-input" placeholder="Submit Escaped"></input> 
+      <button type="submit" class="sendbtnescape" id="escapesend-button">Send</button>
+    </form>
+      
+  </body>
 </html>
