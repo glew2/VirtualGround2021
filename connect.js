@@ -147,4 +147,4 @@ function getRandomRole(){
         return "Seeker";
     }
 }  
-server.listen(80)
+server.listen(3000)
